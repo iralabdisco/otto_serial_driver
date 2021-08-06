@@ -1,0 +1,17 @@
+    ticks_per_revolution: 148000
+    baseline: 0.435
+
+    left_wheel_circ: 0.789
+    right_wheel_circ: 0.783
+
+    kp_left: 180
+    ki_left: 200
+    kd_left: 0
+
+    kp_right: 185
+    ki_right: 195
+    kd_right: 0
+
+    kp_cross: 0
+    ki_cross: 0
+    kd_cross: 0

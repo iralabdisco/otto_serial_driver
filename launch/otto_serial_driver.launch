@@ -1,11 +1,10 @@
 <launch>
-  <!-- Serial bridge nodes -->
-  <node name="otto_serial_driver" pkg="otto_serial_driver" type="otto_serial_driver.py" output="screen"/>
+  <!-- Configuration parameters -->
+  <rosparam command="load" file="$(find otto_serial_driver)/config/firmware_parameters.yaml" />
   
   <!-- Serial port -->  
   <param name="serial_port" value="/dev/ttyUSB0"/>
-  
-  <!-- Configuration parameters -->
-  
-  
+
+  <!-- otto_serial-driver -->
+  <node name="otto_serial_driver" pkg="otto_serial_driver" type="otto_serial_driver.py" output="screen"/>
 </launch>

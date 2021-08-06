@@ -1,0 +1,11 @@
+<launch>
+  <!-- Serial bridge nodes -->
+  <node name="otto_serial_driver" pkg="otto_serial_driver" type="otto_serial_driver.py" output="screen"/>
+  
+  <!-- Serial port -->  
+  <param name="serial_port" value="/dev/ttyUSB0"/>
+  
+  <!-- Configuration parameters -->
+  
+  
+</launch>

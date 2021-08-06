@@ -91,12 +91,10 @@ int main( int argc, char** argv ){
 
   ros::NodeHandle n;
 
-  n.param("baseline", baseline, 0.435f);
-  n.param("left_wheel_circ", left_wheel_circ, 0.789f);
-  n.param("right_wheel_circ", right_wheel_circ, 0.783f);
-  n.param("ticks_per_revolution", ticks_per_revolution);
-
-  ticks_per_revolution = 148000;
+  n.getParam("/baseline", baseline);
+  n.getParam("/left_wheel_circ", left_wheel_circ);
+  n.getParam("/right_wheel_circ", right_wheel_circ);
+  n.getParam("/ticks_per_revolution", ticks_per_revolution);
   
   odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
   ros::Subscriber ticks_sub = n.subscribe("otto_ticks", 1000, ticks_callback);

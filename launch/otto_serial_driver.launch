@@ -6,5 +6,5 @@
   <param name="serial_port" value="/dev/ttyUSB0"/>
 
   <!-- otto_serial-driver -->
-  <node name="otto_serial_driver" pkg="otto_serial_driver" type="otto_serial_driver.py" output="screen"/>
+  <node name="otto_serial_driver_node" pkg="otto_serial_driver" type="otto_serial_driver_node.py" output="screen"/>
 </launch>

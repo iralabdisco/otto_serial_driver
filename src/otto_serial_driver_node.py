@@ -9,6 +9,7 @@ from crccheck.crc import Crc32Mpeg2
 
 import rospy
 from geometry_msgs.msg import Twist
+from otto_serial_driver.msg import otto_ticks
 
 ser = serial.Serial(
         baudrate=115200,
@@ -30,6 +31,7 @@ def callback(data):
 def otto_serial_driver():
     rospy.init_node('serial_control', anonymous=True, log_level=rospy.DEBUG)
     rospy.Subscriber('/cmd_vel', Twist, callback)
+    ticks_pub = rospy.Publisher('otto_ticks', otto_ticks, queue_size=10)
 
     serial_port = rospy.get_param("serial_port", "/dev/ttyUSB0")
     #dtr is connected to RST, on opening dtr is high by default so it resets the st board
@@ -94,6 +96,8 @@ def otto_serial_driver():
 
     rate.sleep()
     rate.sleep()
+
+    ticks_msg = otto_ticks()
     while (not rospy.is_shutdown()):
 
         ## Transmit
@@ -130,6 +134,10 @@ def otto_serial_driver():
             else:
                 rospy.logerr("Unknown otto status! Shutting down")
                 rospy.signal_shutdown
+        else:
+            ticks_msg.left_ticks = status_msg[2]
+            ticks_msg.right_ticks = status_msg[3]
+            ticks_pub.publish(ticks_msg)
             
         rospy.logdebug("Received otto status:")
         rospy.logdebug("Status %d, Delta_millis %d, Left_ticks %d, Right_ticks %d", 

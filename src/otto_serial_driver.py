@@ -72,8 +72,7 @@ def otto_serial_driver():
         crc_tx_pack = struct.pack('<L', crc_tx)
         ser.write(crc_tx_pack)
         
-        rospy.logdebug(vel_msg)
-
+        rospy.logdebug("Sent cmd_vel. Linear %f, Angular %f", linear_vel, angular_vel)
         ## Receive
         # read from serial
         buffer_rx = ser.read(12)
@@ -85,6 +84,7 @@ def otto_serial_driver():
         if (crc_rx_calc != crc_rx):
             rospy.logerr("Error on rx (incorrect CRC)")
         
+        rospy.logdebug("Received otto status [status, delta_millis, left_ticks, right_ticks, crc[")
         rospy.logdebug(status_msg)
         rate.sleep()
 

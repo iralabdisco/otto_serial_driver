@@ -137,6 +137,7 @@ def otto_serial_driver():
         else:
             ticks_msg.left_ticks = status_msg[2]
             ticks_msg.right_ticks = status_msg[3]
+            ticks_msg.timestamp = rospy.get_rostime()
             ticks_pub.publish(ticks_msg)
             
         rospy.logdebug("Received otto status:")

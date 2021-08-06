@@ -18,6 +18,7 @@ void ticks_callback(const otto_serial_driver::otto_ticks::ConstPtr& msg)
 {
   uint32_t left_ticks = msg->left_ticks;
   uint32_t right_ticks = msg->right_ticks;
+  ros::Time timestamp = msg->timestamp;
 
   float ssx = left_ticks*left_wheel_circ/ticks_per_revolution;
   float sdx = right_ticks*right_wheel_circ/ticks_per_revolution;
@@ -52,7 +53,7 @@ void ticks_callback(const otto_serial_driver::otto_ticks::ConstPtr& msg)
   tf::TransformBroadcaster odom_broadcaster;
 
   geometry_msgs::TransformStamped odom_trans;
-  odom_trans.header.stamp = ros::Time::now();
+  odom_trans.header.stamp = timestamp;
   odom_trans.header.frame_id = "odom";
   odom_trans.child_frame_id = "base_link";
 
@@ -66,7 +67,7 @@ void ticks_callback(const otto_serial_driver::otto_ticks::ConstPtr& msg)
 
   //next, we'll publish the odometry message over ROS
   nav_msgs::Odometry odom;
-  odom.header.stamp = ros::Time::now();;
+  odom.header.stamp = timestamp;
   odom.header.frame_id = "odom";
 
   //set the position

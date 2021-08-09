@@ -1,3 +1,3 @@
-uint32 left_ticks
-uint32 right_ticks
+int32 left_ticks
+int32 right_ticks
 time timestamp

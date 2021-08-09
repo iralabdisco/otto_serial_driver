@@ -7,6 +7,6 @@
 
   <!-- otto_serial-driver -->
   <node name="otto_serial_driver_node" pkg="otto_serial_driver" type="otto_serial_driver_node.py" output="screen"/>
-  <node name="otto_odometry_node" pkg="otto_serial_driver" type="otto_odometry_node" output="screen"/>
+  <!-- <node name="otto_odometry_node" pkg="otto_serial_driver" type="otto_odometry_node" output="screen"/> -->
 
 </launch>

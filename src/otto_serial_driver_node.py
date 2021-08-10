@@ -158,15 +158,15 @@ def otto_serial_driver():
 
             diff =  right_arc - left_arc
 
-            if abs(diff) < 0.0001:
+            if abs(diff) < 0.001:
                 delta_x = left_arc
                 delta_y = 0
                 delta_th = 0
             else:
-                radius = (baseline / 2) + ((left_arc * baseline) / diff)
+                radius = baseline/2 * (right_arc + left_arc) / diff
                 delta_th = diff/baseline
-                delta_x = radius*cos(delta_th)
-                delta_y = radius * cos(delta_th) - radius
+                delta_x = radius*sin(delta_th)
+                delta_y = radius - radius*cos(delta_th)
             
             global_x = global_x + delta_x* cos(global_th) - delta_y * sin(global_th)
             global_y = global_y + delta_x * sin(global_th) + delta_y * cos(global_th)

@@ -170,7 +170,7 @@ def otto_serial_driver():
             
             global_x = global_x + delta_x* cos(global_th) - delta_y * sin(global_th)
             global_y = global_y + delta_x * sin(global_th) + delta_y * cos(global_th)
-            global_th = global_th + global_th
+            global_th = global_th + delta_th
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, global_th)
             left_vel = left_arc/(delta_millis/1000)

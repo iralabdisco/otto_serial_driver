@@ -1,0 +1,7 @@
+<launch>
+  
+  <include file="$(find otto_serial_driver)/launch/otto_serial_driver.launch"/>
+  <!-- otto_pid_tuning -->
+  <node name="otto_pid_tuning" pkg="otto_serial_driver" type="otto_pid_tuning.py" output="screen"/>
+
+</launch>

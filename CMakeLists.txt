@@ -54,6 +54,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
    FILES
    otto_ticks.msg
+   otto_pid_tuning_values.msg
 )
 
 ## Generate services in the 'srv' folder

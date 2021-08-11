@@ -145,6 +145,7 @@ def otto_serial_driver():
                 rospy.signal_shutdown
         else:
             ## publish ticks
+            ticks_msg.delta_millis = status_msg[1]
             ticks_msg.left_ticks = status_msg[2]
             ticks_msg.right_ticks = status_msg[3]
             ticks_msg.timestamp = rospy.get_rostime()
@@ -154,7 +155,6 @@ def otto_serial_driver():
             current_time = rospy.Time.now()
             left_arc = ticks_msg.left_ticks * left_wheel_circ / ticks_per_revolution
             right_arc = ticks_msg.right_ticks * right_wheel_circ / ticks_per_revolution
-            delta_millis = status_msg[1]
 
             diff =  right_arc - left_arc
 
@@ -173,8 +173,8 @@ def otto_serial_driver():
             global_th = global_th + delta_th
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, global_th)
-            left_vel = left_arc/(delta_millis/1000)
-            right_vel = right_arc/(delta_millis/1000)
+            left_vel = left_arc/(ticks_msg.delta_millis/1000)
+            right_vel = right_arc/(ticks_msg.delta_millis/1000)
             lin_vel = (left_vel + right_vel)/2
             ang_vel = right_vel - left_vel / baseline
 

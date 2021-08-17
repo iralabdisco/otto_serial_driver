@@ -1,4 +1,4 @@
-# otto_serial_driver
+# Otto serial driver
 
 ROS driver for Otto.
 

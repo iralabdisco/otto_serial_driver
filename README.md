@@ -15,11 +15,6 @@ It performs the following tasks:
 - Receives data from Otto, publish it on ```otto_ticks``` topic
 - Publishes odometry and tf transform
 
-The node ``` otto_pid_tuning.py ``` is used to tune PID parametes.
-It subscribes to ```cmd_vel``` and ```otto_ticks``` and publishes a ```otto_pid_tuning_val``` message.
-You can use ```rqt_plot``` to plot the values and tune your PID.
-
-
 ## How to 
 
 Use ```rosdep``` to install the dependencies needed.

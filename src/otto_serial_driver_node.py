@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import time
 
 import serial
@@ -14,6 +14,8 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 import tf
 from otto_serial_driver.msg import otto_ticks
+
+import sys
 
 ser = serial.Serial(
         baudrate=115200,
@@ -34,6 +36,9 @@ def callback(data):
     angular_vel = data.angular.z
 
 def otto_serial_driver():
+
+    print (sys.version)
+
 
     ## ROS init node
     rospy.init_node('serial_control', anonymous=True, log_level=rospy.DEBUG)
@@ -100,7 +105,7 @@ def otto_serial_driver():
                                 kp_right, ki_right, kd_right,
                                 kp_cross, ki_cross, kd_cross)
     ser.write(config_msg)
-    crc_tx = Crc32Mpeg2.calc(config_msg)
+    crc_tx = Crc32Mpeg2.calc(bytearray(config_msg))
     # convert crc to bytes and send
     crc_tx_pack = struct.pack('<L', crc_tx)
     ser.write(crc_tx_pack)
@@ -114,7 +119,7 @@ def otto_serial_driver():
         vel_msg = struct.pack('<ff', linear_vel, angular_vel)
         ser.write(vel_msg)
         # calculate crc on byte buffer
-        crc_tx = Crc32Mpeg2.calc(vel_msg)
+        crc_tx = Crc32Mpeg2.calc(bytearray(vel_msg))
         # convert crc to bytes and send
         crc_tx_pack = struct.pack('<L', crc_tx)
         ser.write(crc_tx_pack)
@@ -125,9 +130,10 @@ def otto_serial_driver():
         buffer_rx = ser.read(12) #size of status_msg - 4
         crc_rx = ser.read(4) #crc is 32 bits
         status_msg = struct.unpack('=HHll', buffer_rx)
+
         crc_rx = struct.unpack('=L', crc_rx)[0]
         # calculate crc and check if ok
-        crc_rx_calc = Crc32Mpeg2.calc(buffer_rx)
+        crc_rx_calc = Crc32Mpeg2.calc(bytearray(buffer_rx))
         if (crc_rx_calc != crc_rx):
             rospy.logerr("Error on rx (incorrect CRC)")
         if (status_msg[0] != 1):
@@ -173,8 +179,9 @@ def otto_serial_driver():
             global_th = global_th + delta_th
 
             odom_quat = tf.transformations.quaternion_from_euler(0, 0, global_th)
-            left_vel = left_arc/(ticks_msg.delta_millis/1000)
-            right_vel = right_arc/(ticks_msg.delta_millis/1000)
+
+            left_vel = left_arc/(ticks_msg.delta_millis/1000.0)
+            right_vel = right_arc/(ticks_msg.delta_millis/1000.0)
             lin_vel = (left_vel + right_vel)/2
             ang_vel = right_vel - left_vel / baseline
 

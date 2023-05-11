@@ -17,6 +17,17 @@ It performs the following tasks:
 
 ## How to 
 
-Use ```rosdep``` to install the dependencies needed.
+Use ```rosdep``` to install the dependencies needed:
+```bash
+rosdep install otto_serial_driver
+```
 
 In the ```launch``` folder you can find the launch files, launch ```otto_serial_driver.launch``` to start the communication with Otto, using the parameters specified in ```config/firware_parameters.yaml```.
+
+**Important**: to be able to open the serial port, your user should be added to the `dialout` group:
+
+```bash
+sudo useradd -aG dialout $USER
+```
+
+Then logout, and log back in.

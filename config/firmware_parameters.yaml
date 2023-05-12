@@ -1,8 +1,8 @@
     ticks_per_revolution: 148000
     baseline: 0.462002
 
-    left_wheel_circ: 0.77411356258
-    right_wheel_circ: 0.76026542216
+    left_wheel_circ: 0.87
+    right_wheel_circ: 0.867
 
     kp_left: 180
     ki_left: 200

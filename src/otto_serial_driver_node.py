@@ -14,6 +14,7 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 import tf
 from otto_serial_driver.msg import otto_ticks
+import numpy as np
 
 ser = serial.Serial(
         baudrate=115200,
@@ -188,6 +189,8 @@ def otto_serial_driver():
             odom.pose.pose = Pose(Point(global_x, global_y, 0.), Quaternion(*odom_quat))
             odom.child_frame_id = "base_link"
             odom.twist.twist = Twist(Vector3(lin_vel, 0, 0), Vector3(0, 0, ang_vel))
+            odom.pose.covariance = np.eye(6)*0.1
+            odom.twist.covariance = np.eye(6)*0.05
             odom_pub.publish(odom)
 
         rospy.logdebug("Received otto status:")
